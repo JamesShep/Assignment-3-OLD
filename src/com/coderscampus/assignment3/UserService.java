@@ -123,15 +123,13 @@ public class UserService {
         //Make the below an options menu through methods
         if (successfulLogin) {
             if (superUser) {
-                System.out.println("-----------------------");
-                System.out.println("Please select an option");
-                System.out.println("1: Log in as another user");
-                System.out.println("2: Update password");
-                System.out.println("3: Update name");
-                System.out.println("4: Exit");
+                displayChoiceMenu();
                 optionChoice = userInput.nextInt();
-
-
+            } else {
+                displayChoiceMenu();
+                optionChoice = userInput.nextInt();
+            }
+        }
 
 /*                while (optionChoice != 4) {
                     switch (optionChoice) {
@@ -149,15 +147,17 @@ public class UserService {
                     }
                     }*/
 
-                }
-            } else {
-                System.out.println("----------------------");
-                System.out.println("Please select an option");
-                System.out.println("1: Log in as another user");
-                System.out.println("2: Update password");
-                System.out.println("3: Update name");
-                System.out.println("4: Exit");
-                optionChoice = userInput.nextInt();
-            } userInput.close();
+        userInput.close();
+    }
+
+
+    private void displayChoiceMenu () {
+        System.out.println("----------------------");
+        System.out.println("Please select an option");
+        System.out.println("0: Log in as another user");
+        System.out.println("1: Update username");
+        System.out.println("2: Update password");
+        System.out.println("3: Update name");
+        System.out.println("4: Exit");
     }
 }
