@@ -1,6 +1,6 @@
 package com.coderscampus.assignment3;
 
-public class User {
+public class User implements Comparable<User> {
 
     private String email;
     private String password;
@@ -38,4 +38,14 @@ public class User {
     public void setRole(String role) {
         this.role = role;
     }
+
+   @Override
+    public int compareTo(User o) {
+        int i = o.getRole().compareTo(this.getRole());
+        if (i == 0) {
+            i = this.getEmail().compareTo(o.getEmail());
+        }
+        return i;
+    }
+
 }
