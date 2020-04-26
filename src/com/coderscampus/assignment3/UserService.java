@@ -22,9 +22,9 @@ public class UserService {
             while ((line = fileReader.readLine()) != null) {
 
                 String[] dataArray = line.split(", ");
-                if (dataArray[3].equals("super_user")) {
+                if ("super_user".equals(dataArray[3])) {
                     database[i] = new SuperUser(dataArray[0], dataArray[1], dataArray[2], dataArray[3]);
-                } else if (dataArray[3].equals("normal_user")){
+                } else if ("normal_user".equals(dataArray[3])) {
                     database[i] = new NormalUser(dataArray[0], dataArray[1], dataArray[2], dataArray[3]);
                 } else {
                     System.out.println("Error");
@@ -63,7 +63,7 @@ public class UserService {
         int exitChoice = 4;
         int optionChoice = 0;
         int loginAttempt = 0;
-        
+
         final int MAX_LOGIN_ATTEMPT = 5;
 
         while (loggedInUser == null && loginAttempt < MAX_LOGIN_ATTEMPT) {
@@ -88,9 +88,8 @@ public class UserService {
                 optionChoice = Integer.parseInt(userInput.nextLine());
                 if (optionChoice == 0 && "super_user".equals(loggedInUser.getRole())) {
                     System.out.println("Please select a valid email to login: ");
-                    //Finish below - currently just an output of the input
                     String input = userInput.nextLine();
-                            System.out.println(input);
+                    loggedInUser = getUserWithoutPassword(input);
 
                 } else if (optionChoice == 1) {
                     updateEmail(loggedInUser);
@@ -134,7 +133,14 @@ public class UserService {
         }
     }
 
-
+    private User getUserWithoutPassword(String email) {
+        for (User user : database) {
+            if (user.getEmail().equalsIgnoreCase(email)) {
+                return user;
+            }
+        }
+        return null;
+    }
     private User getUser(String email, String password) {
         for (User user : database) {
             if (user.getEmail().equalsIgnoreCase(email) &&
@@ -150,10 +156,10 @@ public class UserService {
         System.out.println("Welcome, " + loggedInUser.getName());
         System.out.println("----------------------");
         System.out.println("Please select an option");
-        if ("super_user".equals(loggedInUser.getRole())) {
+        if (loggedInUser instanceof SuperUser) {
             System.out.println("0: Log in as another user");
         }
-        System.out.println("1: Update username");
+        System.out.println("1: Update email");
         System.out.println("2: Update password");
         System.out.println("3: Update name");
         System.out.println("4: Exit");
